@@ -79,26 +79,6 @@
   (= x 0 )
 )
 
-(defun bruteforce_cell(x y seq)
- (if(<= x 0)) NIL
- (if(> x 9)) NIL
- (if(not (is_blank (or seq y)))) seq
- (if(not (valid_coord  y (replace x y seq)))
-   (bruteforce_cell y (+ x 1) seq))
- (concatenate((replace y x seq) (brutefore_cell y (+x 1) seq)))
-)
-
-(defun backtrack_str8ts(x seq)
- (if(< i 0) 
-  NIL
-  (if(>= x (lenght seq)) seq 
- (concatenate (map (backtrack_str8ts (+ x 1)) (bruteforce_cell x 1 seq)))
-)
-
-(defun solve_str8ts(x)
-  (backtrack_str8ts 0 x)
-)
-
 (defun is_number(x)
   (and (numberp x) (/= x 0))
 )
@@ -130,16 +110,22 @@
     ))))
 )
 
-(defun create_board()
-    (setq board   '(x  0  0 -1  x  x
-                    x  0  0  0  5  0
-                    x  0  1  0  0  0
-                    4  0  0  0  0  x     
-                    0  6  5  0  0  x
-                    x  x  x  0  1 -4)
-    )
-    (setq size 6)
-)
+; (defun bruteforce_cell(x y seq)
+;  (if(<= x 0)) NIL
+;  (if(> x 9)) NIL
+;  (if(not (is_blank (or seq y)))) seq
+;  (if(not (valid_coord  y (replace x y seq)))
+;   (bruteforce_cell y (+ x 1) seq))
+;  (concatenate((replace y x seq) (brutefore_cell y (+x 1) seq)))
+; )
+
+; (defun backtrack_str8ts(x seq)
+;  (if(< i 0) 
+;   NIL
+;   (if(>= x (lenght seq)) seq 
+;  (concatenate (map (backtrack_str8ts (+ x 1)) (bruteforce_cell x 1 seq)))
+; )
+
 
 (defun show_board(board size)
     (dotimes (y size)
@@ -160,6 +146,20 @@
     )
 )
 
+(defun solve_str8ts(x)
+  (backtrack_str8ts 0 x)
+)
+
+(defun create_board()
+    (setq board   '(x  0  0 -1  x  x
+                    x  0  0  0  5  0
+                    x  0  1  0  0  0
+                    4  0  0  0  0  x     
+                    0  6  5  0  0  x
+                    x  x  x  0  1 -4)
+    )
+    (setq size 6)
+)
 
 (defun main()
     (create_board)
