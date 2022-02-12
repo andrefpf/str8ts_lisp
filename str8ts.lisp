@@ -152,9 +152,13 @@
 )
 
 (defun bruteforce_cell(i board size)
-    (map 'list 
-        (lambda (x) (repl i x board))
-        (list 1 2 3 4 5 6 7 8 9)
+    (remove-if-not 
+        (lambda (x) (valid_coord i x size))
+    
+        (map 'list 
+            (lambda (x) (repl i x board))
+            (list 1 2 3 4 5 6 7 8 9)
+        )
     )
 )
 
