@@ -14,7 +14,6 @@
     )
 )
 
-
 (defun steps(n seq)
     (if (null seq)
         ()
@@ -59,19 +58,28 @@
 )
 
 
-
 ; funções para o resolvedor
 
 (defun validStraight(seq)
-
     (if (inList 0 seq) T
     (if (/= (- (length seq) 1) (- (reduce #'max seq) (reduce #'min seq))) NIL
     (if (repeated seq) NIL
-    ; else
-    T
+     T
     )))
 )
 
+(defun valid_coord(n seq)
+    (setq row (list 1 2 4 3))
+    (setq col (list 1 2 4 5))
+    
+    (if (repeated (map 'list #'abs (remove-if-not #'is_number row)))
+        NIL
+    (if (repeated (map 'list #'abs (remove-if-not #'is_number col)))
+        NIL
+    T
+    ))
+
+)
 
 
 
@@ -93,8 +101,9 @@
 
 
 (defun main()
+    ; (write (map 'list #'abs (list -1 2 -3 4)) )
     (create_board)
-    (write (validStraight (list 3 1 1)))
+    (write (valid_coord 1 board) )
 )
 
 (main)
