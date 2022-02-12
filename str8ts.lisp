@@ -169,6 +169,16 @@
 ;  (concatenate (map (backtrack_str8ts (+ x 1)) (bruteforce_cell x 1 seq)))
 ; )
 
+(defun show_solution(solution)
+    (if (null solution)
+        ()
+    ; else
+        (progn
+            (show_board (first solution) size)
+            (show_solution (rest solution))
+        )
+    )
+)
 
 (defun show_board(board size)
     (dotimes (y size)
@@ -176,7 +186,7 @@
             (setq val (nth (+ (* y size) x) board))
             
             (if (not (numberp val))
-                (format T "[ ]")
+                (format T "[X]")
             (if (= val 0)
                 (format T "   ")
             (if (< val 0)
@@ -185,8 +195,10 @@
                 (format T " ~D " val)
             )))
         )
-        (terpri )
+        (terpri)
     )
+    (terpri)
+    (terpri)
 )
 
 (defun solve_str8ts(x)
@@ -206,7 +218,10 @@
 
 (defun main()
     (create_board)
-    (write (bruteforce_cell 1 board size))
+
+    (show_solution (bruteforce_cell 1 board size))
+    
+    ; (write (bruteforce_cell 1 board size))
     ; (write (append (list 1 2 3 4) '(5)))
     ; (write (valid_coord 3 board size))
     ; (show_board board size)
