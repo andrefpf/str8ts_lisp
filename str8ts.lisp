@@ -78,7 +78,7 @@
 )
 
 (defun concalist(seq)
-    (if (= (length seq) 0) 
+    (if (null seq) 
         ()
     ;else
         (append (first seq) (concalist (rest seq)))
@@ -103,7 +103,7 @@
 )
 
 (defun is_blank(x)
-  (= x 0 )
+  (= x 0)
 )
 
 (defun is_number(x)
@@ -159,20 +159,27 @@
 )
 
 (defun bruteforce_cell(i board size)
-    (remove-if-not 
-        (lambda (x) (valid_coord i x size))
-    
-        (map 'list 
-            (lambda (x) (repl i x board))
-            (list 1 2 3 4 5 6 7 8 9) 
+    (if (not (numberp (nth i board)))
+        ()
+    (if (not (is_blank (nth i board)))
+        ()
+    ; else 
+        (remove-if-not 
+            (lambda (x) (valid_coord i x size))
+        
+            (map 'list 
+                (lambda (u) (repl i x board))
+                (list 1 2 3 4 5 6 7 8 9) 
+            )
         )
-    )
+    ))
 )
+
 
 (defun backtrack_str8ts(i board size)
     (if (< i 0) 
         ()
-    (if(>= i 9)
+    (if(>= i (* size size))
         (list board) 
     ; else
         (concalist 
@@ -234,8 +241,8 @@
 (defun main()
     (create_board)
     (show_solution (solve_str8ts board size))
-
-    ; (write (bruteforce_cell 1 board size))
+    
+    ; (write (bruteforce_cell 3 board size))
     ; (write (append (list 1 2 3 4) '(5)))
     ; (write (valid_coord 3 board size))
     ; (show_board board size)
