@@ -228,21 +228,25 @@
 )
 
 (defun create_board()
-    (setq board   '(x  0  0 -1  x  x
-                    x  0  0  0  5  0
-                    x  0  1  0  0  0
-                    4  0  0  0  0  x     
-                    0  6  5  0  0  x
-                    x  x  x  0  1 -4)
+    (setq board   ;'(x  0  0 -1  x  x
+                   ; x  0  0  0  5  0
+                    ;x  0  1  0  0  0
+                    ;4  0  0  0  0  x     
+                   ; 0  6  5  0  0  x
+                    ;  x  x  0  1 -4)
+    		    '(-4 0 0 -1
+		       5 0 X  0
+		      -7 0 1  9
+		       2 0 0  8)
     )
-    (setq size 6)
+    (setq size 4)
 )
 
 (defun main()
     (create_board)
-    (show_solution (solve_str8ts board size))
+    ;(show_solution (solve_str8ts board size))
     
-    ; (write (bruteforce_cell 7 board size))
+    (write (bruteforce_cell 7 board size))
     ; (write (append (list 1 2 3 4) '(5)))
     ; (write (valid_coord 3 board size))
     ; (show_board board size)
