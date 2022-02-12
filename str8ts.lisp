@@ -72,6 +72,13 @@
     )))
 )
 
+(defun get_row(size row)
+  (slice (* row size) ( + (* row size) size) 1 list)
+)
+
+(defun get_col(size col)
+  (slice size (* size size) size col)
+)
 (defun is_white(x)
   (>= x 0) 
 )
@@ -82,6 +89,17 @@
 
 (defun is_blank(x)
   (= x 0 )
+)
+
+(defun backtrack_str8ts(x, seq)
+ (if(< i 0) 
+   NIL
+  (if(>= x (lenght seq)) seq 
+  (backtrack_str8ts (+ x 1) (bruteforce_cell x 1 seq))
+)
+
+(defun solve_str8ts(x)
+  (backtrack_str8ts 0 x)
 )
 
 (defun is_number(x)
@@ -95,49 +113,35 @@
                     0  6  5  0  0  x
                     x  x  x  0  1 -4)
     )
-
+    (setq size 6)
 )
 
 
-
+(defun show_cell(c)
+  (if(= c -10)
+  	(setq c "[X]"))
+  (if(= c 0)
+    	(setq c " _ "))
+  (if(< c 0) 
+    	(setq c (concatenate 'sring "[" 
+	  
+(defun parse-output (numbers)
+    (dotimes (y SIZE)
+        (terpri )
+        (dotimes (x SIZE)
+          (setq number_cool (aref numbers y x))
+	  (if (is_black number_cool)
+                (format T " ~D " ( number_cool))
+                (format T "[~D]" (aref numbers y x)))
+    (terpri )
+)
 
 
 (defun main()
     (create_board)
-    ;;(write (validStraight (list 3 1 1)))
-    (write (is_number 2))
+    (write (get_col size board))
 )
 
-(main)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+(parse_output board)
 
 
