@@ -14,6 +14,26 @@
     )
 )
 
+(defun take_while(test seq)
+    (if (null seq)
+        ()
+    (if (funcall test (first seq)) 
+        (cons (first seq) (take_while test (rest seq)))
+    ; else 
+        ()
+    ))
+)
+
+(defun drop_while(test seq)
+    (if (null seq)
+        ()
+    (if (funcall test (first seq)) 
+        (drop_while test (rest seq))
+    ; else 
+        seq
+    ))
+)
+
 (defun steps(n seq)
     (if (null seq)
         ()
@@ -60,19 +80,19 @@
 
 ; funções para o resolvedor
 
-(defun get_row(row seq size)
-  (slice (* row size) ( + (* row size) size) 1 seq)
+(defun get_row(row board size)
+  (slice (* row size) ( + (* row size) size) 1 board)
 )
 
-(defun get_col(col seq size)
-  (slice col (* size size) size seq)
+(defun get_col(col board size)
+  (slice col (* size size) size board)
 )
 (defun is_white(x)
-  (>= x 0) 
+  (and (numberp x) (>= x 0))
 )
 
 (defun is_black(x)
-  (< x 0)
+  (not (is_white x))
 )
 
 (defun is_blank(x)
@@ -83,6 +103,29 @@
   (and (numberp x) (/= x 0))
 )
 
+(defun is_complete(seq)
+    (if (null seq)
+        T
+    (if (= (first seq) 0)
+        NIL
+    ; else
+        (is_complete (rest seq))
+    ))
+)
+
+(defun extract_straights(seq)
+    (setq straight (take_while #'is_white (drop_while #'is_black seq)))
+    (setq remaining (drop_while #'is_white (drop_while #'is_black seq)))
+    
+    (if (null seq)
+        ()
+    (if (null straight)
+        (extract_straights remaining)
+    ; else 
+        (cons straight (extract_straights remaining))
+    ))
+)
+
 (defun valid_straight(seq)
     (if (inList 0 seq) T
     (if (/= (- (length seq) 1) (- (reduce #'max seq) (reduce #'min seq))) NIL
@@ -91,33 +134,29 @@
     )))
 )
 
-(defun valid_coord(n seq)
-    (setq row (list 1 2 4 3))
-    (setq col (list 3 4 5 6))
-    
-    (setq row_str (list (list 2 4 3)))
-    (setq col_str (list (list 1 2 3)))
+(defun valid_coord(n board size)
+    (setq row (get_row (floor n size) board size))
+    (setq col (get_col (mod   n size) board size))
     
     (if (repeated (map 'list #'abs (remove-if-not #'is_number row)))
         NIL
     (if (repeated (map 'list #'abs (remove-if-not #'is_number col)))
         NIL
-    (if (not (every #'valid_straight row_str))
+    (if (not (every #'valid_straight (extract_straights row)))
         NIL
-    (if (not (every #'valid_straight col_str))
+    (if (not (every #'valid_straight (extract_straights col)))
         NIL
+    ; else
         T
     ))))
 )
 
-; (defun bruteforce_cell(x y seq)
-;  (if(<= x 0)) NIL
-;  (if(> x 9)) NIL
-;  (if(not (is_blank (or seq y)))) seq
-;  (if(not (valid_coord  y (replace x y seq)))
-;   (bruteforce_cell y (+ x 1) seq))
-;  (concatenate((replace y x seq) (brutefore_cell y (+x 1) seq)))
-; )
+(defun bruteforce_cell(i board size)
+    (map 'list 
+        (lambda (x) (repl i x board))
+        (list 1 2 3 4 5 6 7 8 9)
+    )
+)
 
 ; (defun backtrack_str8ts(x seq)
 ;  (if(< i 0) 
@@ -154,7 +193,7 @@
     (setq board   '(x  0  0 -1  x  x
                     x  0  0  0  5  0
                     x  0  1  0  0  0
-                    4  0  0  0  0  x     
+                    4  0  0  1  0  x     
                     0  6  5  0  0  x
                     x  x  x  0  1 -4)
     )
@@ -163,11 +202,56 @@
 
 (defun main()
     (create_board)
-    (show_board board size)
-    ; (write (get_col 3 board size))
+    (write (bruteforce_cell 1 board size))
+    ; (write (append (list 1 2 3 4) '(5)))
+    ; (write (valid_coord 3 board size))
+    ; (show_board board size)
+    ; (write (extract_straights (get_row 0 board size)))
 )
 
 (main)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
