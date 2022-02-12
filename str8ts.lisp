@@ -1,3 +1,4 @@
+; funções para mexer com listas
 (defun drop(n seq)
     (if (= n 0) 
         seq
@@ -58,11 +59,59 @@
 )
 
 
+
+; funções para o resolvedor
+
+(defun validStraight(seq)
+
+    (if (inList 0 seq) T
+    (if (/= (- (length seq) 1) (- (reduce #'max seq) (reduce #'min seq))) NIL
+    (if (repeated seq) NIL
+    ; else
+    T
+    )))
+)
+
+
+
+
+
+
+(defun create_board()
+    (setq board   '(x  0  0 -1  x  x
+                    x  0  0  0  5  0
+                    x  0  1  0  0  0
+                    4  0  0  0  0  x     
+                    0  6  5  0  0  x
+                    x  x  x  0  1 -4)
+    )
+
+)
+
+
+
+
+
 (defun main()
-    (write (repl 3 8 (list 0 1 2 3 4 5 6 7 1)))
+    (create_board)
+    (write (validStraight (list 3 1 1)))
 )
 
 (main)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
