@@ -91,11 +91,20 @@
   (= x 0 )
 )
 
+(defun bruteforce_cell(x, y, seq)
+ (if(<= x 0)) NIL
+ (if(> x 9)) NIL
+ (if(not (is_blank (or seq y)))) seq
+ (if(not (valid_coord  y (replace x y seq)))
+   (bruteforce_cell y (+ x 1) seq))
+ (concatenate((replace y x seq) (brutefore_cell y (+x 1) seq)))
+)
+
 (defun backtrack_str8ts(x, seq)
  (if(< i 0) 
    NIL
   (if(>= x (lenght seq)) seq 
-  (backtrack_str8ts (+ x 1) (bruteforce_cell x 1 seq))
+ (concatenate (map (backtrack_str8ts (+ x 1)) (bruteforce_cell x 1 seq)))
 )
 
 (defun solve_str8ts(x)
