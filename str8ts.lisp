@@ -60,12 +60,12 @@
 
 ; funções para o resolvedor
 
-(defun get_row(size row)
-  (slice (* row size) ( + (* row size) size) 1 list)
+(defun get_row(row seq size)
+  (slice (* row size) ( + (* row size) size) 1 seq)
 )
 
-(defun get_col(size col)
-  (slice size (* size size) size col)
+(defun get_col(col seq size)
+  (slice col (* size size) size seq)
 )
 (defun is_white(x)
   (>= x 0) 
@@ -79,9 +79,9 @@
   (= x 0 )
 )
 
-(defun backtrack_str8ts(x, seq)
+(defun backtrack_str8ts(x seq)
  (if(< i 0) 
-   NIL
+  NIL
   (if(>= x (lenght seq)) seq 
   (backtrack_str8ts (+ x 1) (bruteforce_cell x 1 seq))
 )
@@ -132,32 +132,33 @@
     (setq size 6)
 )
 
-(defun show_cell(c)
-  (if(= c -10)
-  	(setq c "[X]"))
-  (if(= c 0)
-    	(setq c " _ "))
-  (if(< c 0) 
-    	(setq c (concatenate 'sring "[" 
-	  
-(defun parse-output (numbers)
-    (dotimes (y SIZE)
+(defun show_board(board size)
+    (dotimes (y size)
+        (dotimes(x size)
+            (setq val (nth (+ (* y size) x) board))
+            
+            (if (not (numberp val))
+                (format T "[ ]")
+            (if (= val 0)
+                (format T "   ")
+            (if (< val 0)
+                (format T "[~D]" (abs val))    
+            ; else
+                (format T " ~D " val)
+            )))
+        )
         (terpri )
-        (dotimes (x SIZE)
-          (setq number_cool (aref numbers y x))
-	  (if (is_black number_cool)
-                (format T " ~D " ( number_cool))
-                (format T "[~D]" (aref numbers y x)))
-    (terpri )
+    )
 )
 
 
 (defun main()
     (create_board)
-    (write (get_col size board))
+    (show_board board size)
+    ; (write (get_col 3 board size))
 )
 
-(parse_output board)
+(main)
 
 
 
