@@ -77,6 +77,13 @@
     )
 )
 
+(defun concalist(seq)
+    (if (= (length seq) 0) 
+        ()
+    ;else
+        (append (first seq) (concalist (rest seq)))
+    )
+)
 
 ; funções para o resolvedor
 
@@ -157,25 +164,23 @@
     
         (map 'list 
             (lambda (x) (repl i x board))
-            (list 1 2 3 4 )
+            (list 1 2 3 4 5 6 7 8 9) 
         )
     )
 )
 
-(defun backtrack_str8ts(i seq)
+(defun backtrack_str8ts(i board size)
     (if (< i 0) 
         ()
-    (if(>= i 2) 
-        seq 
+    (if(>= i 9)
+        (list board) 
     ; else
-        ; (append 
-            ; (remove-if #'null
-                (map 'list 
-                     (lambda (x) (backtrack_str8ts (+ i 1) x))
-                     (bruteforce_cell i seq size)
-                )
-            ; )
-        ; )
+        (concalist 
+            (map 'list 
+                 (lambda (x) (backtrack_str8ts (+ i 1) x size))
+                 (bruteforce_cell i board size)
+            )
+        )
     ))
 )
 
@@ -211,15 +216,15 @@
     (terpri)
 )
 
-(defun solve_str8ts(x)
-  (backtrack_str8ts 0 x)
+(defun solve_str8ts(board size)
+  (backtrack_str8ts 0 board size)
 )
 
 (defun create_board()
     (setq board   '(x  0  0 -1  x  x
                     x  0  0  0  5  0
                     x  0  1  0  0  0
-                    4  0  0  1  0  x     
+                    4  0  0  0  0  x     
                     0  6  5  0  0  x
                     x  x  x  0  1 -4)
     )
@@ -228,12 +233,8 @@
 
 (defun main()
     (create_board)
-    
-    (write (concatenate 'list (list (list 1 2 3) (list 4 5 6)) ))
-    
-    ; (write (solve_str8ts board))
-    ; (show_solution (bruteforce_cell 1 board size))
-    
+    (show_solution (solve_str8ts board size))
+
     ; (write (bruteforce_cell 1 board size))
     ; (write (append (list 1 2 3 4) '(5)))
     ; (write (valid_coord 3 board size))
