@@ -157,17 +157,27 @@
     
         (map 'list 
             (lambda (x) (repl i x board))
-            (list 1 2 3 4 5 6 7 8 9)
+            (list 1 2 3 4 )
         )
     )
 )
 
-; (defun backtrack_str8ts(x seq)
-;  (if(< i 0) 
-;   NIL
-;   (if(>= x (lenght seq)) seq 
-;  (concatenate (map (backtrack_str8ts (+ x 1)) (bruteforce_cell x 1 seq)))
-; )
+(defun backtrack_str8ts(i seq)
+    (if (< i 0) 
+        ()
+    (if(>= i 2) 
+        seq 
+    ; else
+        ; (append 
+            ; (remove-if #'null
+                (map 'list 
+                     (lambda (x) (backtrack_str8ts (+ i 1) x))
+                     (bruteforce_cell i seq size)
+                )
+            ; )
+        ; )
+    ))
+)
 
 (defun show_solution(solution)
     (if (null solution)
@@ -218,8 +228,11 @@
 
 (defun main()
     (create_board)
-
-    (show_solution (bruteforce_cell 1 board size))
+    
+    (write (concatenate 'list (list (list 1 2 3) (list 4 5 6)) ))
+    
+    ; (write (solve_str8ts board))
+    ; (show_solution (bruteforce_cell 1 board size))
     
     ; (write (bruteforce_cell 1 board size))
     ; (write (append (list 1 2 3 4) '(5)))
