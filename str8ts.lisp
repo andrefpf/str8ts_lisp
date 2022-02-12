@@ -160,15 +160,15 @@
 
 (defun bruteforce_cell(i board size)
     (if (not (numberp (nth i board)))
-        ()
+        (list board)
     (if (not (is_blank (nth i board)))
-        ()
+        (list board)
     ; else 
         (remove-if-not 
             (lambda (x) (valid_coord i x size))
         
             (map 'list 
-                (lambda (u) (repl i x board))
+                (lambda (x) (repl i x board))
                 (list 1 2 3 4 5 6 7 8 9) 
             )
         )
@@ -242,7 +242,7 @@
     (create_board)
     (show_solution (solve_str8ts board size))
     
-    ; (write (bruteforce_cell 3 board size))
+    ; (write (bruteforce_cell 7 board size))
     ; (write (append (list 1 2 3 4) '(5)))
     ; (write (valid_coord 3 board size))
     ; (show_board board size)
