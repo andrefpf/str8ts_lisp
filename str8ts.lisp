@@ -72,11 +72,21 @@
     )))
 )
 
+(defun is_white(x)
+  (>= x 0) 
+)
 
+(defun is_black(x)
+  (< x 0)
+)
 
+(defun is_blank(x)
+  (= x 0 )
+)
 
-
-
+(defun is_number(x)
+  (and (numberp x) (/= x 0))
+)
 (defun create_board()
     (setq board   '(x  0  0 -1  x  x
                     x  0  0  0  5  0
@@ -94,7 +104,8 @@
 
 (defun main()
     (create_board)
-    (write (validStraight (list 3 1 1)))
+    ;;(write (validStraight (list 3 1 1)))
+    (write (is_number 2))
 )
 
 (main)
