@@ -1,11 +1,11 @@
-# STRAIGTS SOLVER
+# STRAIGTS SOLVER LISP
 
 ## ALUNOS
   André Filipe da Silva Fernandes - 19100515
   
   Hans Buss Heidemann - 19100528
 
-Link youtube: 
+Link youtube: https://youtu.be/2xTltlfR8qo
 
 ## O PROBLEMA
   Escolhemos o puzzle Straights para implementar uma solução. O jogo consiste em um tabuleiro quadrado com casas brancas e pretas. Algumas dessas casas possuem números iniciais, e nosso objetivo é preencher o restante das casas brancas de forma que nenhuma linha
