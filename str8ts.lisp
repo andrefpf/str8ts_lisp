@@ -13,7 +13,7 @@
         (cons (first seq) (take (- n 1) (rest seq)))
     )
 )
-
+        
 (defun take_while(test seq)
     (if (null seq)
         ()
@@ -94,6 +94,7 @@
 (defun get_col(col board size)
   (slice col (* size size) size board)
 )
+
 (defun is_white(x)
   (and (numberp x) (>= x 0))
 )
@@ -103,33 +104,22 @@
 )
 
 (defun is_blank(x)
-  (= x 0)
+  (and  (numberp x) (= x 0))
 )
 
 (defun is_number(x)
   (and (numberp x) (/= x 0))
 )
 
-(defun is_complete(seq)
-    (if (null seq)
-        T
-    (if (= (first seq) 0)
-        NIL
-    ; else
-        (is_complete (rest seq))
-    ))
-)
-
 (defun extract_straights(seq)
     (setq straight (take_while #'is_white (drop_while #'is_black seq)))
-    (setq remaining (drop_while #'is_white (drop_while #'is_black seq)))
     
     (if (null seq)
         ()
     (if (null straight)
-        (extract_straights remaining)
+        (extract_straights (drop_while #'is_white (drop_while #'is_black seq)))
     ; else 
-        (cons straight (extract_straights remaining))
+        (cons straight (extract_straights (drop_while #'is_white (drop_while #'is_black seq))))
     ))
 )
 
@@ -159,22 +149,18 @@
 )
 
 (defun bruteforce_cell(i board size)
-    (if (not (numberp (nth i board)))
-        (list board)
     (if (not (is_blank (nth i board)))
         (list board)
-    ; else 
+    ; else
         (remove-if-not 
             (lambda (x) (valid_coord i x size))
         
             (map 'list 
                 (lambda (x) (repl i x board))
-                (list 1 2 3 4 5 6 7 8 9) 
-            )
+                (list 1 2 3 4 5 6 7 8 9))
         )
-    ))
+    )
 )
-
 
 (defun backtrack_str8ts(i board size)
     (if (< i 0) 
@@ -192,13 +178,8 @@
 )
 
 (defun show_solution(solution)
-    (if (null solution)
-        ()
-    ; else
-        (progn
-            (show_board (first solution) size)
-            (show_solution (rest solution))
-        )
+    (dotimes (i (length solution))
+        (show_board (nth i solution) size)
     )
 )
 
@@ -228,29 +209,19 @@
 )
 
 (defun create_board()
-    (setq board   ;'(x  0  0 -1  x  x
-                   ; x  0  0  0  5  0
-                    ;x  0  1  0  0  0
-                    ;4  0  0  0  0  x     
-                   ; 0  6  5  0  0  x
-                    ;  x  x  0  1 -4)
-    		    '(-4 0 0 -1
-		       5 0 X  0
-		      -7 0 1  9
-		       2 0 0  8)
+    (setq board   '(x  x  x  3  0 -1
+                    0  0  1  0  0  x
+                    0  4  0  0  x  x
+                    x  x  0  0  0  0 
+                    x  0  5  1  3  0
+                   -4  0  0  x  x  x)
     )
-    (setq size 4)
+    (setq size 6)
 )
 
 (defun main()
     (create_board)
-    ;(show_solution (solve_str8ts board size))
-    
-    (write (bruteforce_cell 7 board size))
-    ; (write (append (list 1 2 3 4) '(5)))
-    ; (write (valid_coord 3 board size))
-    ; (show_board board size)
-    ; (write (extract_straights (get_row 0 board size)))
+    (show_solution (solve_str8ts board size))
 )
 
 (main)
