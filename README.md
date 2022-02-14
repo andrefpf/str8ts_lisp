@@ -88,14 +88,14 @@ $ clisp str8ts.lisp
 
 ## Organização do grupo
 
-Primeiro selecionamos as funções que cada um estaria responsavel por traduzir, após isso começamos o trabalho sinalizando em que funções estavamos tendo dificuldades em implementar pelas diferenças com Haskell, para resolver essas funções nós juntamos no discord e começamos a implementar funções não nativas para solucionar o problema. Os testes foram realizados sempre por um integrante do grupo em um interpretador online e depois validados por outro integrante com o Clisp.
+Primeiro selecionamos as funções que cada um estaria responsável por traduzir, após isso começamos o trabalho sinalizando em que funções estavamos tendo dificuldades em implementar pelas diferenças com Haskell, para resolver essas funções nós juntamos no discord e começamos a implementar funções não nativas para solucionar o problema. Os testes foram realizados sempre por um integrante do grupo em um interpretador online e depois validados por outro integrante com o Clisp.
 Após a finalização da implementação do trabalho, nos dividimos entre um editar o vídeo da apresentação e o outro estar realizando a escrita do relátorio.
 
 
 ## Dificuldades encontradas e diferenças a Haskell
 
-Neste trabalho encontramos pouca dificuldade em relação ao trabalho relaziado em Haskell, como já tinhamos conhecimento sobre a implementação do algoritmo para resolver, somente tivemos que estar traduzindo o resolver para o LISP. Achamos o LISP muito mais consistente e com uma curva de aprendizado mais facil do que em relação ao Haskell, a grande quantidade de parenteses usados pela linguagem dificulta um pouco o entendimento do programa em editores que não tem suporte, mas nada impossivel de se sobreviver.
+Neste trabalho encontramos pouca dificuldade em relação ao trabalho realizado em Haskell, como já tinhamos conhecimento sobre a implementação do algoritmo para resolver, somente tivemos que estar traduzindo o resolver para o LISP. Achamos o LISP muito mais consistente e com uma curva de aprendizado mais facil em relação ao Haskell, a grande quantidade de parênteses usados pela linguagem dificulta um pouco o entendimento do programa em editores que não tem suporte, mas nada impossível de se resolver.
 
-Tivemos alguns problemas nos testes iniciais com LISP pois notamos que os programas são rodadas de uma forma muito lenta, principalmente da forma interpretada e para casos grandes chega a quase nao ser aceitavel, rodando o programa compilado conseguimos resultados mais rápidos.
+Tivemos alguns problemas nos testes iniciais com LISP pois notamos que os programas são rodadas de uma forma muito lenta, principalmente da forma interpretada e para casos grandes chega a quase não ser aceitvel, rodando o programa compilado conseguimos resultados mais rápidos.
 
 Tivemos dificuldade também em algumas funções de LISP que funcionam de forma diferente em haskell, como a função Concate, que precisamos estar implementando uma versão propria nossa, mas também utilizamos outras funções nativas como o map e o dotimes, que acreditamos serem mais otimizados do que as criadas por nos próprias.
